@@ -188,6 +188,10 @@ function drush_preflight() {
   drush_load_config('custom');
 
   _drush_preflight_global_options();
+
+  // Find the selected site based on --root, --uri or cwd
+  drush_preflight_root();
+
   // Load all the commandfiles findable from any of the
   // scopes listed above.
   _drush_find_commandfiles_drush();
@@ -204,9 +208,6 @@ function drush_preflight() {
   // done, since site aliases may set option values that
   // affect these phases.
   $alias_record = _drush_sitealias_set_context_by_name($target_alias);
-
-  // Find the selected site based on --root, --uri or cwd
-  drush_preflight_root();
 
   // Preflight the selected site, and load any configuration and commandfiles associated with it.
   drush_preflight_site();
